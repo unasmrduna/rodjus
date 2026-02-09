@@ -2,6 +2,7 @@
 <html lang="sr">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>SREĆAN ROĐENDAN</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -21,19 +22,25 @@ body {
   margin: 0;
   background: white;
   font-family: "Inter", system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
 /* ================= HEADER ================= */
 header {
   text-align: center;
-  padding: 80px 20px 30px;
+  padding: 40px 20px 20px;
 }
 
 h1 {
   font-family: "Comic Neue", cursive;
-  font-size: clamp(60px, 10vw, 120px);
+  font-size: clamp(36px, 12vw, 120px);
   margin: 0;
-  line-height: 1;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+h1 span {
+  display: inline-block;
 }
 
 h1 span:nth-child(1) { color: var(--green); }
@@ -41,17 +48,17 @@ h1 span:nth-child(2) { color: var(--red); }
 h1 span:nth-child(3) { color: var(--blue); }
 
 .subtitle {
-  margin-top: 18px;
+  margin-top: 12px;
   font-family: "Comic Neue", cursive;
-  font-size: 22px;
+  font-size: clamp(16px, 4vw, 22px);
   color: var(--blue);
 }
 
 .underline {
-  width: 260px;
-  height: 6px;
+  width: min(260px, 80vw);
+  height: 4px;
   background: var(--yellow);
-  margin: 20px auto 0;
+  margin: 15px auto 0;
   border-radius: 4px;
   transform: rotate(-2deg);
 }
@@ -60,28 +67,37 @@ h1 span:nth-child(3) { color: var(--blue); }
 .controls {
   display: flex;
   justify-content: center;
-  gap: 18px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin: 40px 0;
+  margin: 30px 0;
+  padding: 0 15px;
 }
 
 button {
   font-family: "Comic Neue", cursive;
-  font-size: 18px;
-  padding: 14px 24px;
+  font-size: clamp(14px, 3.5vw, 18px);
+  padding: 12px 18px;
   background: white;
   border: 3px solid currentColor;
   cursor: pointer;
   transition: transform .15s ease, box-shadow .15s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button.red { color: var(--red); }
 button.blue { color: var(--blue); }
 button.green { color: var(--green); }
 
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 4px 4px currentColor;
+button:active {
+  transform: scale(0.95);
+}
+
+@media (hover: hover) {
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px currentColor;
+  }
 }
 
 button.active {
@@ -94,9 +110,11 @@ button.active {
   max-width: 420px;
   margin: 0 auto 30px;
   border: 3px solid black;
-  padding: 16px;
+  padding: 14px;
   font-family: "Comic Neue", cursive;
   display: none;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .player.playing {
@@ -109,7 +127,7 @@ button.active {
 }
 
 .track {
-  font-size: 18px;
+  font-size: clamp(15px, 4vw, 18px);
   margin-bottom: 10px;
 }
 
@@ -120,78 +138,23 @@ button.active {
   transition: width .2s linear;
 }
 
-/* ================= MOBILE ================= */
-@media (max-width: 600px) {
-
-  header {
-    padding: 50px 16px 20px;
-  }
-
-  h1 {
-    font-size: clamp(44px, 12vw, 70px);
-  }
-
-  .subtitle {
-    font-size: 18px;
-  }
-
-  .underline {
-    width: 180px;
-    height: 5px;
-  }
-
-  /* buttons stack nicer */
-  .controls {
-    gap: 12px;
-    margin: 28px 0;
-  }
-
-  button {
-    font-size: 16px;
-    padding: 12px 18px;
-  }
-
-  /* music player */
-  .player {
-    width: calc(100% - 32px);
-    margin: 0 auto 20px;
-  }
-
-  /* gallery tighter grid */
-  .gallery {
-    padding: 20px 16px;
-    gap: 18px;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  }
-
-  .card:hover {
-    transform: scale(1.03) rotate(0deg);
-  }
-
-  /* notes smaller so they don't scream */
-  .note {
-    font-size: 14px;
-  }
-
-  footer {
-    font-size: 16px;
-    padding: 40px 16px;
-  }
-
-  /* DVD smaller on phone */
-  #dvd {
-    width: 90px;
-  }
-}
 
 /* ================= GALLERY ================= */
 .gallery {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 30px 15px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 26px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 20px;
+}
+
+@media (min-width: 600px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 26px;
+    padding: 40px 20px;
+  }
 }
 
 .card {
@@ -202,8 +165,14 @@ button.active {
   transition: transform .25s ease;
 }
 
-.card:hover {
+.card:active {
   transform: scale(1.06) rotate(0deg);
+}
+
+@media (hover: hover) {
+  .card:hover {
+    transform: scale(1.06) rotate(0deg);
+  }
 }
 
 .card img {
@@ -215,17 +184,18 @@ button.active {
 .note {
   position: absolute;
   font-family: "Comic Neue", cursive;
-  font-size: 18px;
+  font-size: clamp(14px, 3.5vw, 18px);
   opacity: 0.85;
   pointer-events: none;
+  z-index: 100;
 }
 
 /* ================= FOOTER ================= */
 footer {
   text-align: center;
-  padding: 60px 20px;
+  padding: 40px 20px;
   font-family: "Comic Neue", cursive;
-  font-size: 20px;
+  font-size: clamp(16px, 4vw, 20px);
   color: var(--green);
 }
 
@@ -234,9 +204,16 @@ footer {
   position: fixed;
   top: 100px;
   left: 100px;
-  width: 140px;
-  pointer-events: none; /* so it doesn't block clicks */
+  width: clamp(80px, 20vw, 140px);
+  pointer-events: none;
   z-index: 9999;
+  will-change: transform;
+}
+
+@media (max-width: 600px) {
+  #dvd {
+    width: 100px;
+  }
 }
 
 #dvd img {
@@ -329,27 +306,38 @@ function toggleNotes() {
   }
 
   const texts = ["SREĆAN ROĐENDAN", "BĆŽU", "ĆAO UNA", "huhuhuhuh", "181818181818", "nadam se da ti se sviđa..."];
-  for (let i = 0; i < 10; i++) {
+  const count = window.innerWidth < 600 ? 6 : 10; // fewer notes on mobile
+  
+  for (let i = 0; i < count; i++) {
     const n = document.createElement("div");
     n.className = "note";
     n.textContent = texts[Math.floor(Math.random()*texts.length)];
-    n.style.left = Math.random()*90 + "vw";
-    n.style.top = Math.random()*90 + "vh";
+    n.style.left = Math.random()*85 + "vw";
+    n.style.top = Math.random()*85 + "vh";
     n.style.color = ["#e63946","#2563eb","#16a34a"][Math.floor(Math.random()*3)];
     n.style.transform = `rotate(${Math.random()*20-10}deg)`;
     document.body.appendChild(n);
   }
   notesOn = true;
 }
+
 /* ================= DVD BOUNCE ================= */
 const dvd = document.getElementById("dvd");
 
 let x = 100;
 let y = 100;
-let vx = 2.2;  // horizontal speed
-let vy = 2;    // vertical speed
+let vx = 2.2;
+let vy = 2;
+let lastTime = 0;
 
-function moveDVD() {
+function moveDVD(timestamp) {
+  // Throttle animation for better mobile performance
+  if (timestamp - lastTime < 16) {
+    requestAnimationFrame(moveDVD);
+    return;
+  }
+  lastTime = timestamp;
+  
   const w = window.innerWidth - dvd.offsetWidth;
   const h = window.innerHeight - dvd.offsetHeight;
 
@@ -364,7 +352,17 @@ function moveDVD() {
   requestAnimationFrame(moveDVD);
 }
 
-moveDVD();
+requestAnimationFrame(moveDVD);
+
+// Prevent zoom on double-tap for iOS
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function (event) {
+  const now = (new Date()).getTime();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
 
 </script>
 
