@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<title>SREĆAN ROĐENDAN</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --red: #e63946;
+  --blue: #2563eb;
+  --green: #16a34a;
+  --yellow: #facc15;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: white;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* ================= HEADER ================= */
+header {
+  text-align: center;
+  padding: 80px 20px 30px;
+}
+
+h1 {
+  font-family: "Comic Neue", cursive;
+  font-size: clamp(60px, 10vw, 120px);
+  margin: 0;
+  line-height: 1;
+}
+
+h1 span:nth-child(1) { color: var(--green); }
+h1 span:nth-child(2) { color: var(--red); }
+h1 span:nth-child(3) { color: var(--blue); }
+
+.subtitle {
+  margin-top: 18px;
+  font-family: "Comic Neue", cursive;
+  font-size: 22px;
+  color: var(--blue);
+}
+
+.underline {
+  width: 260px;
+  height: 6px;
+  background: var(--yellow);
+  margin: 20px auto 0;
+  border-radius: 4px;
+  transform: rotate(-2deg);
+}
+
+/* ================= CONTROLS ================= */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 40px 0;
+}
+
+button {
+  font-family: "Comic Neue", cursive;
+  font-size: 18px;
+  padding: 14px 24px;
+  background: white;
+  border: 3px solid currentColor;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+button.red { color: var(--red); }
+button.blue { color: var(--blue); }
+button.green { color: var(--green); }
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px currentColor;
+}
+
+button.active {
+  background: currentColor;
+  color: white;
+}
+
+/* ================= MUSIC PLAYER ================= */
+.player {
+  max-width: 420px;
+  margin: 0 auto 30px;
+  border: 3px solid black;
+  padding: 16px;
+  font-family: "Comic Neue", cursive;
+  display: none;
+}
+
+.player.playing {
+  animation: pulse 1.2s infinite alternate;
+}
+
+@keyframes pulse {
+  from { box-shadow: 0 0 0 transparent; }
+  to { box-shadow: 0 0 18px var(--yellow); }
+}
+
+.track {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.bar {
+  height: 6px;
+  background: var(--yellow);
+  width: 0%;
+  transition: width .2s linear;
+}
+
+/* ================= GALLERY ================= */
+.gallery {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 26px;
+}
+
+.card {
+  border: 3px solid black;
+  padding: 6px;
+  background: white;
+  transform: rotate(var(--r));
+  transition: transform .25s ease;
+}
+
+.card:hover {
+  transform: scale(1.06) rotate(0deg);
+}
+
+.card img {
+  width: 100%;
+  display: block;
+}
+
+/* ================= NOTES ================= */
+.note {
+  position: absolute;
+  font-family: "Comic Neue", cursive;
+  font-size: 18px;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  text-align: center;
+  padding: 60px 20px;
+  font-family: "Comic Neue", cursive;
+  font-size: 20px;
+  color: var(--green);
+}
+
+/* ================= DVD BOUNCER ================= */
+#dvd {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  width: 140px;
+  pointer-events: none; /* so it doesn't block clicks */
+  z-index: 9999;
+}
+
+#dvd img {
+  width: 100%;
+  display: block;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>
+    <span>srećan</span>
+    <span>rođendan</span>
+    <span>una</span>
+  </h1>
+  <div class="subtitle">:******** <33</div>
+  <div class="underline"></div>
+</header>
+
+<div class="controls">
+  <button class="red" onclick="shuffle()">PROMEŠAJ nika mulena</button>
+  <button class="blue" onclick="toggleMusic()">PUSTI MUZIKU</button>
+  <button class="green" onclick="toggleNotes()">PORUKICEEE</button>
+</div>
+
+<div class="player" id="player">
+  <div class="track">♪ LIGU LIGUUUUU</div>
+  <div class="bar" id="bar"></div>
+</div>
+
+<section class="gallery" id="gallery">
+  <div class="card" style="--r:-5deg"><img src="nick1.jpg"></div>
+  <div class="card" style="--r:4deg"><img src="nick2.jpg"></div>
+  <div class="card" style="--r:-3deg"><img src="nick3.jpg"></div>
+  <div class="card" style="--r:6deg"><img src="nick4.jpg"></div>
+  <div class="card" style="--r:-7deg"><img src="nick5.jpg"></div>
+  
+</section>
+
+<footer>
+  105 pa opet
+</footer>
+
+<div id="dvd">
+  <img src="download.png" alt="butanboca">
+</div>
+
+
+<audio id="music" src="pesma.mp3"></audio>
+
+<script>
+const gallery = document.getElementById("gallery");
+const music = document.getElementById("music");
+const player = document.getElementById("player");
+const bar = document.getElementById("bar");
+let notesOn = false;
+
+function shuffle() {
+  [...gallery.children]
+    .sort(() => Math.random() - 0.5)
+    .forEach(el => gallery.appendChild(el));
+}
+
+function toggleMusic() {
+  if (music.paused) {
+    music.play();
+    player.style.display = "block";
+    player.classList.add("playing");
+  } else {
+    music.pause();
+    player.classList.remove("playing");
+  }
+}
+
+
+music.ontimeupdate = () => {
+  if (music.duration) {
+    bar.style.width = (music.currentTime / music.duration) * 100 + "%";
+  }
+};
+
+function toggleNotes() {
+  if (notesOn) {
+    document.querySelectorAll(".note").forEach(n => n.remove());
+    notesOn = false;
+    return;
+  }
+
+  const texts = ["SREĆAN ROĐENDAN", "BĆŽU", "ĆAO UNA", "huhuhuhuh", "181818181818", "nadam se da ti se sviđa..."];
+  for (let i = 0; i < 10; i++) {
+    const n = document.createElement("div");
+    n.className = "note";
+    n.textContent = texts[Math.floor(Math.random()*texts.length)];
+    n.style.left = Math.random()*90 + "vw";
+    n.style.top = Math.random()*90 + "vh";
+    n.style.color = ["#e63946","#2563eb","#16a34a"][Math.floor(Math.random()*3)];
+    n.style.transform = `rotate(${Math.random()*20-10}deg)`;
+    document.body.appendChild(n);
+  }
+  notesOn = true;
+}
+/* ================= DVD BOUNCE ================= */
+const dvd = document.getElementById("dvd");
+
+let x = 100;
+let y = 100;
+let vx = 2.2;  // horizontal speed
+let vy = 2;    // vertical speed
+
+function moveDVD() {
+  const w = window.innerWidth - dvd.offsetWidth;
+  const h = window.innerHeight - dvd.offsetHeight;
+
+  x += vx;
+  y += vy;
+
+  if (x <= 0 || x >= w) vx *= -1;
+  if (y <= 0 || y >= h) vy *= -1;
+
+  dvd.style.transform = `translate(${x}px, ${y}px)`;
+
+  requestAnimationFrame(moveDVD);
+}
+
+moveDVD();
+
+</script>
+
+</body>
+</html>
